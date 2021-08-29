@@ -85,7 +85,6 @@ jobs:
           name: test front-end
           command: |
             cd frontend
-            
             npm run test
            
       - save_cache:
@@ -103,7 +102,6 @@ jobs:
           name: test back-end
           command: |
             cd backend
-            
             npm run test
             
       - save_cache:
