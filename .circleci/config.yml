@@ -176,7 +176,7 @@ jobs:
 
   configure-infrastructure:
     docker:
-      -image: python:3.7-alpine3.11
+      - image: python:3.7-alpine3.11
     steps:
       - checkout
       - add_ssh_keys:
@@ -197,10 +197,11 @@ jobs:
             ansible-playbook -i inventory.txt configure-server.yml
            
       - destroy-environment:
-          ID: ${CIRCLE_WORKFLOW_ID}          
+          ID: ${CIRCLE_WORKFLOW_ID}
+
   run-migrations:
     docker:
-      -image: circleci/node:13.8.0
+      - image: circleci/node:13.8.0
     steps:
       - run:
           name: Run migrations
@@ -231,7 +232,7 @@ jobs:
           workID: ${CIRCLE_WORKFLOW_ID}  
   deploy-frontend:
     docker:
-      -image: amazon/aws-cli
+      - image: amazon/aws-cli
     steps:
       - run:
           name: Install dependencies
