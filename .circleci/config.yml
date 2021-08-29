@@ -102,7 +102,7 @@ jobs:
       - run:
           name: test back-end
           command: |
-            cd ~/project3-git/frontend
+            cd backend
             npm i
             npm test
             
@@ -118,11 +118,11 @@ jobs:
       - restore_cache:
           keys: [frontend-scan]
       - run:
-          name: scan back-end
+          name: scan front-end
           command: |
             cd frontend
             npm i
-            npm audit --audit-level=critical --force
+            npm audit --audit-level=critical 
             
       - save_cache:
           paths: [frontend/node_modules]
@@ -138,7 +138,7 @@ jobs:
       - run:
           name: test back-end
           command: |
-            cd ~/project3-git/frontend
+            cd backend
             npm i
             npm audit --audit-level=critical
             cat package.json
@@ -396,14 +396,14 @@ workflows:
     jobs:
       - build-frontend
       - build-backend
-      - test-frontend:
-          requires: [build-frontend]
+#      - test-frontend:
+#          requires: [build-frontend]
       - test-backend:
           requires: [build-backend]
-#      - scan-backend:
-#          requires: [build-backend]
-#      - scan-frontend:
-#          requires: [build-frontend]
+      - scan-backend:
+          requires: [build-backend]
+      - scan-frontend:
+          requires: [build-frontend]
 #      - deploy-infrastructure:
 #          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
 #          filters:
