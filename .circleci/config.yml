@@ -181,7 +181,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["b1:25:36:f7:8a:0b:a5:d7:34:a8:c6:8f:04:18:95:d2"]
-#     - attach_workspace:
+      - attach_workspace:
           at: ~/project        
       - run:
           name: Install dependencies
@@ -191,7 +191,7 @@ jobs:
       - run:
           name: Configure server
           command: |
-#            cd .circleci/ansible
+            cd .circleci/ansible
             echo "content"
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
