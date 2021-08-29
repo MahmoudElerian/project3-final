@@ -415,7 +415,7 @@ workflows:
       - deploy-infrastructure:
           filters:
             branches:
-              only: [test-feature-branch]
+              only: [main]
 #      - configure-infrastructure:
 #          requires: [deploy-infrastructure]
 #      - run-migrations:
