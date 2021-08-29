@@ -215,7 +215,7 @@ jobs:
       - run:
           name: Send migration results to memstash
           command: |
-#            cd backend
+            cd backend
             if grep -q "has been executed successfully" migration.txt
             then
              curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data "1" https://api.memstash.io/values/status
@@ -236,7 +236,7 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-#            yum update
+            yum update
             yum upgrade
             yum install sudo -y
             curl -sL https://rpm.nodesource.com/setup_13.x | sudo bash - 
@@ -244,7 +244,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-#            cd frontend
+            cd frontend
             BACKEND_IP=$(aws ec2 describe-instances \
                           --query 'Reservations[*].Instances[*].PublicIpAddress' \
                           --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID}" \
@@ -288,7 +288,7 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible
-#            apk add --update nodejs npm tar gzip
+            apk add --update nodejs npm tar gzip
       - run:
           name: Deploy backend
           command: |
@@ -323,7 +323,7 @@ jobs:
     docker:
       - image: alpine:latest
     steps:
-      # Checkout code from git
+      - checkout
       - run:
           name: Install dependencies
           command: |
