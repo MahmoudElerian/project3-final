@@ -14,7 +14,7 @@ commands:
             aws s3 rm s3://udapeople-<< parameters.ID >> --recursive
             aws cloudformation delete-stack udapeople-backend-<< parameters.ID >> 
             aws cloudformation delete-stack --stack-name frontend-<< parameters.ID >>
-            exit 1
+            
 
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
@@ -33,7 +33,7 @@ commands:
                cd ~/project/backend
                npm install
                npm run migration:revert
-              exit 1
+              
             fi
             
 jobs:
@@ -51,7 +51,7 @@ jobs:
             npm i
             npm audit fix
             npm run build
-            exit 1
+            
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -69,7 +69,7 @@ jobs:
              cd backend
              npm i
              npm run build
-             exit 1
+             
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -87,7 +87,7 @@ jobs:
             cd frontend
             npm i
             npm test
-            exit 1
+           
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -105,7 +105,7 @@ jobs:
             cd ~/project3-git/frontend
             npm i
             npm test
-            exit 1
+            
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -123,7 +123,7 @@ jobs:
             cd frontend
             npm i
             npm audit --audit-level=critical --force
-            exit 1
+            
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -142,7 +142,7 @@ jobs:
             npm i
             npm audit --audit-level=critical
             cat package.json
-            exit 1
+            
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
@@ -155,12 +155,12 @@ jobs:
           name: Ensure back-end infrastructure exists
           command: |
             aws cloudformation deploy --template-file .circleci/files/backend.yml --tags project=udapeople --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID} --parameter-overrides ID = ${CIRCLE_WORKFLOW_ID}  
-              exit 1
+              
       - run:
           name: Ensure front-end infrastructure exist
           command: |
             aws cloudformation deploy --template-file .circleci/files/forntend.yml --tags project=udapeople --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID} --parameter-overrides ID = ${CIRCLE_WORKFLOW_ID}  
-              exit 1
+              
       - run:
           name: Add back-end ip to ansible inventory
           command: |
@@ -187,7 +187,7 @@ jobs:
           name: Install dependencies
           command: |
              apk add --update ansible
-            exit 1
+            
       - run:
           name: Configure server
           command: |
@@ -195,7 +195,7 @@ jobs:
             echo "content"
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
-            exit 1
+           
       - destroy-environment:
           ID: ${CIRCLE_WORKFLOW_ID}          
   run-migrations:
@@ -211,7 +211,7 @@ jobs:
             echo "the migration file"
             cat migration.txt
             echo "the env file"
-            exit 1
+            
       - run:
           name: Send migration results to memstash
           command: |
@@ -223,7 +223,7 @@ jobs:
             else
              curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID}" --request PUT --data "0" https://api.memstash.io/values/status
             fi
-            exit 1
+           
       - destroy-environment:
           ID: ${CIRCLE_WORKFLOW_ID} 
 
