@@ -12,7 +12,7 @@ commands:
           when: on_fail
           command: |
             aws s3 rm s3://udapeople-<< parameters.ID >> --recursive
-            aws cloudformation delete-stack udapeople-backend-<< parameters.ID >> 
+            aws cloudformation delete-stack --stack-name backend-<< parameters.ID >>
             aws cloudformation delete-stack --stack-name frontend-<< parameters.ID >>
             
 
@@ -175,6 +175,22 @@ jobs:
              --query 'Reservations[*].Instances[*].PublicIpAddress' \
              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID}" \
              --output text >> .circleci/ansible/inventory.txt
+      - run: 
+          name: add viable in env file
+          command: |
+            echo ENVIRONMENT=production > backend/.env
+            echo TYPEORM_CONNECTION=postgres >> backend/.env
+            echo TYPEORM_ENTITIES=./src/modules/domain/**/*.entity.ts >> backend/.env
+            echo TYPEORM_HOST=$TYPEORM_HOST >> backend/.env
+            echo TYPEORM_PORT=$TYPEORM_PORT >> backend/.env
+            echo TYPEORM_USERNAME=$TYPEORM_USERNAME >> backend/.env
+            echo TYPEORM_PASSWORD=$TYPEORM_PASSWORD >> backend/.env
+            echo TYPEORM_DATABASE=$TYPEORM_DATABASE >> backend/.env
+            echo TYPEORM_MIGRATIONS=./src/migrations/*.ts >> "backend/.env"
+            echo TYPEORM_MIGRATIONS_DIR=./src/migrations >> "backend/.env"
+            echo NODE_ENV=production >> "backend/.env"
+            
+      - run: yum -y install tar gzip 
       - persist_to_workspace:
           root: ~/
           paths:
