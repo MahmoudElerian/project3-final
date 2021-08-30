@@ -1,0 +1,16 @@
+---
+
+- name: "copy files"
+  become: yes
+  copy: 
+    src: ../../../../backendartifact.tar.gz
+    dest: ../ubuntu
+
+- name: "start"
+  become: yes
+  shell: |
+    tar -xzvf backendartifact.tar.gz -C backend
+    cd backend
+    sudo npm i
+    sudo npm run build
+    pm2 start npm -- run start
