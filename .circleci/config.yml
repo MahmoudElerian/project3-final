@@ -193,7 +193,7 @@ jobs:
             
       - run: yum -y install tar gzip 
       - persist_to_workspace:
-          root: ~/
+          root: ~/project
           paths:
           - .circleci/ansible/inventory.txt
           - backend/
