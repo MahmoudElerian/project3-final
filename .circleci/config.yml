@@ -244,7 +244,7 @@ jobs:
             echo "the migration file"
             cat migration.txt
             echo "the env file"    
-            
+
       - run:
           name: Send migration results to memstash
           command: |
@@ -267,6 +267,7 @@ jobs:
     docker:
       - image: amazon/aws-cli
     steps:
+      - checkout  
       - run:
           name: Install dependencies
           command: |
