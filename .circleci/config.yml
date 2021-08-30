@@ -239,7 +239,7 @@ jobs:
           name: Run migrations
           command: |
             cd backend
-            npm run migartions > migration.txt
+            npm run migrations > migration.txt
             echo "the migration file"
             cat migration.txt
             echo "the env file"
