@@ -242,8 +242,7 @@ jobs:
             npm run migrations > migration.txt
             echo "the migration file"
             cat migration.txt
-            echo "the env file"
-            
+            echo "the env file"      
       - run:
           name: Send migration results to memstash
           command: |
